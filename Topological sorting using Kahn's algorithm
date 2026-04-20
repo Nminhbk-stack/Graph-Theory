@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+int n, m;
+vector<int> adj[200007];
+int d[200007];
+int visited[200005];
+
+void nhap(){
+    cin >> n >> m;
+    while(m--){
+        int x, y; cin >> x >> y;
+        adj[x].push_back(y);
+        d[y]++;
+    }
+    for(int i = 1; i <= n; i++){
+        sort(adj[i].begin(), adj[i].end());
+    }
+
+}
+
+void Kahn(){
+    queue<int> q;
+    for(int i = 1; i<= n; i++){
+        if(d[i] == 0) q.push(i);
+    }
+    while(!q.empty()){
+        int x = q.front(); q.pop();
+        cout << x << " "; 
+        for(int y : adj[x]){
+            --d[y];
+            if(d[y] == 0) q.push(y);
+        }
+    }
+}
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    nhap();
+    Kahn();
+
+    return 0;
+}
